@@ -87,3 +87,62 @@ ORDER BY total_confirmed DESC,
 -- Q9. Check how corona virus spread out with respect to confirmed case.
 --      (Eg.: total confirmed cases, their average, variance & STDEV )
 
+SELECT TO_CHAR(date, 'Month') AS Months,
+	   SUM(confirmed) AS total_confirmed,
+	   ROUND(AVG(confirmed) :: numeric, 0) AS average,
+	   ROUND(VAR_POP(confirmed) :: numeric, 0) AS variance,
+	   ROUND(STDDEV_POP(confirmed) :: numeric, 0) AS STDDEV 
+FROM covid_dataset
+GROUP BY Months
+ORDER BY total_confirmed;
+
+-- Q10. Check how corona virus spread out with respect to death case per month.
+--      (Eg.: total confirmed cases, their average, variance & STDEV )
+
+SELECT TO_CHAR(date, 'Month') AS Months,
+	   SUM(deaths) AS total_deaths,
+	   ROUND(AVG(deaths) :: numeric, 0) AS average,
+	   ROUND(VAR_POP(deaths) :: numeric, 0) AS variance,
+	   ROUND(STDDEV_POP(deaths) :: numeric, 0) AS STDDEV 
+FROM covid_dataset
+GROUP BY Months
+ORDER BY total_deaths;
+
+-- Q11. Check how corona virus spread out with respect to recovered case.
+--      (Eg.: total confirmed cases, their average, variance & STDEV )
+
+SELECT TO_CHAR(date, 'Month') AS Months,
+	   SUM(recovered) AS total_recovered,
+	   ROUND(AVG(recovered) :: numeric, 0) AS average,
+	   ROUND(VAR_POP(recovered) :: numeric, 0) AS variance,
+	   ROUND(STDDEV_POP(recovered) :: numeric, 0) AS STDDEV 
+FROM covid_dataset
+GROUP BY Months
+ORDER BY total_recovered;
+
+-- Q12. Find Country having highest number of the confirmed case.
+
+SELECT country_or_region,
+	   SUM(confirmed) AS total_confirmed_cases
+FROM covid_dataset
+GROUP BY country_or_region
+ORDER BY total_confirmed_cases DESC
+LIMIT 1;
+
+-- Q13. Find Country having lowest number of the death case.
+
+SELECT country_or_region,
+	   SUM(deaths) AS total_deaths
+FROM covid_dataset
+GROUP BY country_or_region
+ORDER BY total_deaths ASC
+LIMIT 1;
+
+-- Q14. Find top 5 countries having highest recovered case
+
+SELECT country_or_region,
+	   SUM(recovered) AS total_recovered_cases
+FROM covid_dataset
+GROUP BY country_or_region
+ORDER BY total_recovered_cases DESC
+LIMIT 5;
